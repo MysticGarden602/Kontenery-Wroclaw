@@ -240,7 +240,7 @@
                         </div>
                     </form>
                     <div class="mt-6 text-center text-gray-600">
-                        <p>lub zadzwoń: <a href="tel:+48515090555" class="text-blue-600 font-bold">+515 090 555</a></p>
+                        <p>lub zadzwoń: <a href="tel:+48665093351" class="text-blue-600 font-bold">+48 665 093 351</a></p>
                     </div>
                 </div>
             </div>
