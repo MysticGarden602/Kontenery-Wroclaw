@@ -1,1 +1,409 @@
-# Kontenery-Wroclaw
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wynajem Kontenerów Magazynowych - Wrocław, ul. Krakowska</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem;
+        }
+        /* Lightbox CSS */
+        .lightbox {
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+        .lightbox-close, .lightbox-nav {
+            position: absolute;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: color 0.2s ease;
+        }
+        .lightbox-close {
+            top: 20px;
+            right: 30px;
+        }
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+        .lightbox-nav.next {
+            right: 20px;
+        }
+        .lightbox-close:hover, .lightbox-nav:hover {
+            color: #d1d5db; /* gray-300 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-900">
+                Kontenery<span class="text-blue-600">Wrocław</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#oferta" class="text-gray-600 hover:text-blue-600 transition duration-300">Oferta</a>
+                <a href="#zalety" class="text-gray-600 hover:text-blue-600 transition duration-300">Zalety</a>
+                <a href="#galeria" class="text-gray-600 hover:text-blue-600 transition duration-300">Galeria</a>
+                <a href="#lokalizacja" class="text-gray-600 hover:text-blue-600 transition duration-300">Lokalizacja</a>
+                <a href="#kontakt" class="text-gray-600 hover:text-blue-600 transition duration-300">Kontakt</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white py-2">
+            <a href="#oferta" class="block px-6 py-2 text-gray-600 hover:bg-blue-50">Oferta</a>
+            <a href="#zalety" class="block px-6 py-2 text-gray-600 hover:bg-blue-50">Zalety</a>
+            <a href="#galeria" class="block px-6 py-2 text-gray-600 hover:bg-blue-50">Galeria</a>
+            <a href="#lokalizacja" class="block px-6 py-2 text-gray-600 hover:bg-blue-50">Lokalizacja</a>
+            <a href="#kontakt" class="block px-6 py-2 text-gray-600 hover:bg-blue-50">Kontakt</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="container mx-auto px-6">
+        <section class="text-center py-20 md:py-32">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                Twoja dodatkowa przestrzeń w centrum Wrocławia
+            </h1>
+            <!-- Dodana informacja o nowych kontenerach -->
+            <div class="mt-4 inline-block bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-1 rounded-full">
+                Nowe kontenery "one way"
+            </div>
+            <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                Wynajmij bezpieczny i suchy kontener magazynowy o powierzchni 13,9 m² w doskonałej lokalizacji przy ul. Krakowskiej. Idealne rozwiązanie dla firm i osób prywatnych.
+            </p>
+            <div class="mt-8">
+                <a href="#kontakt" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                    Wynajmij już teraz
+                </a>
+            </div>
+        </section>
+
+        <!-- Offer Section -->
+        <section id="oferta" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nasza Oferta</h2>
+                <p class="text-gray-600 mt-2">Proste zasady, jedna, stała cena.</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-2xl max-w-4xl mx-auto overflow-hidden md:flex">
+                <div class="md:w-1/2">
+                    <!-- Zaktualizowany obraz w sekcji Oferta -->
+                    <img class="h-full w-full object-cover rounded-xl" src="https://lh3.googleusercontent.com/pw/AP1GczMt8-0lE7urChKfkjGIXHIuDQ7OHb6_IBCV4xE1dRufBuLaL_fnG2vPn06e1KmOYDKSNVpyWt1WYvOO2Qq-f7BLD87K_WTmMD0mOxrexJcKgs83_Xwo0MQWXhbau18Gujz44puqedF1p04Tpot01IOL=w1368-h919-s-no-gm?authuser=0" alt="Zdjęcie kontenera magazynowego">
+                </div>
+                <div class="p-8 md:p-12 md:w-1/2 flex flex-col justify-center">
+                    <div class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Kontener Magazynowy</div>
+                    <h3 class="text-3xl font-bold text-gray-900 mt-2">Powierzchnia 13,9 m²</h3>
+                    <p class="text-gray-600 mt-4">Wynajmij przestrzeń w jednorazowo wykorzystanym kontenerze "one way". Wystarczająco dużo miejsca na meble, sprzęt budowlany, towar firmowy lub archiwum. Solidna, stalowa konstrukcja chroni Twoje rzeczy.</p>
+                    <div class="mt-6">
+                        <span class="text-5xl font-bold text-gray-900">600 zł</span>
+                        <span class="text-xl text-gray-600">/ miesiąc</span>
+                    </div>
+                    <div class="mt-6 text-gray-700">
+                        <p class="flex items-center"><span class="text-green-500 mr-2">✔</span> Bez ukrytych opłat</p>
+                        <p class="flex items-center mt-1"><span class="text-green-500 mr-2">✔</span> Umowa na czas nieokreślony</p>
+                        <p class="flex items-center mt-1"><span class="text-green-500 mr-2">✔</span> Dostęp od zaraz</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advantages Section -->
+        <section id="zalety" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Dlaczego my?</h2>
+                <p class="text-gray-600 mt-2">Zapewniamy bezpieczeństwo i wygodę.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-4xl text-blue-600 mb-4">🕒</div>
+                    <h3 class="text-xl font-bold mb-2">Dostęp 24/7</h3>
+                    <p class="text-gray-600">Korzystaj ze swojego magazynu o każdej porze dnia i nocy, 7 dni w tygodniu.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-4xl text-blue-600 mb-4">🛡️</div>
+                    <h3 class="text-xl font-bold mb-2">Monitoring i Bezpieczeństwo</h3>
+                    <p class="text-gray-600">Teren jest objęty całodobowym monitoringiem wizyjnym, a kontenery zabezpieczone kłódkami.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-4xl text-blue-600 mb-4">📍</div>
+                    <h3 class="text-xl font-bold mb-2">Świetna Lokalizacja</h3>
+                    <p class="text-gray-600">ul. Krakowska we Wrocławiu. Szybki i łatwy dojazd z każdej części miasta.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="galeria" class="py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Galeria</h2>
+                <p class="text-gray-600 mt-2">Zobacz nasze kontenery i plac. Kliknij na zdjęcie, aby je powiększyć.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Obrazy z galerii -->
+                <img class="h-full w-full object-cover rounded-lg shadow-md cursor-pointer" src="https://lh3.googleusercontent.com/pw/AP1GczMt8-0lE7urChKfkjGIXHIuDQ7OHb6_IBCV4xE1dRufBuLaL_fnG2vPn06e1KmOYDKSNVpyWt1WYvOO2Qq-f7BLD87K_WTmMD0mOxrexJcKgs83_Xwo0MQWXhbau18Gujz44puqedF1p04Tpot01IOL=w1368-h919-s-no-gm?authuser=0" alt="Kontenery magazynowe z zewnątrz">
+                <img class="h-full w-full object-cover rounded-lg shadow-md cursor-pointer" src="https://lh3.googleusercontent.com/pw/AP1GczPmkreo04TXwfSk7JZPj8-CRuGs9Xbcl4XlwUjM-816cQyqIy0SqdbenwOUZX9Xfbb1qpriwIqrCXLF34NIpQfQxcUUMFDy6C-JKX4XDn7CqRgDLuo7ntX_3rSZgJ_biDJDG1FZG1FKLhBoZovCGTMU=w1379-h919-s-no-gm?authuser=0" alt="Plac z kontenerami">
+                <img class="h-full w-full object-cover rounded-lg shadow-md cursor-pointer" src="https://lh3.googleusercontent.com/pw/AP1GczNV265y7tZ6b8xtoqG5WtNT7CpPOKAmSzu3gfep361EX1smTjbKkRIfdeDswR3uHAEPMhsqBHjx9Bf67GEpP5sZqnUUNizBV_W3s_ZgZitjElImFimYLUvVpcLevlUZyP30yPq91k_M7jacpK7VfuCi=w1390-h919-s-no-gm?authuser=0" alt="Wnętrze kontenera magazynowego">
+                <img class="h-full w-full object-cover rounded-lg shadow-md cursor-pointer" src="https://lh3.googleusercontent.com/pw/AP1GczO9o18eBXXq_4W2pbanjFRuuYUuC-e_WkQX8JkpELom4xcRp7uAMX4EMAi6_Wy7pXHtt7fnlV_UUpEIwmNfTt6-FAaiNevqdDRgBqa90lCnANulFORIhJRvLmmtw6T9Nl2TUw_KmyTYuVqekd-1nart=w1378-h919-s-no-gm?authuser=0" alt="Drugie zdjęcie wnętrza kontenera">
+                <img class="h-full w-full object-cover rounded-lg shadow-md cursor-pointer" src="https://lh3.googleusercontent.com/pw/AP1GczPrJUBOJnlrB16yoLxT7zJKn5bPwnS2LCN_KMG7J7YAtr277_48OjNuIqEVvYBGgZEBDJV_4-ATG7mMWHIfAXnpmKSogvSTlBbIFEbzA2MrVgkcN6033reLuJs1lm3VqkdsFNboW8ekFeBMloRFcjwt=w1358-h919-s-no-gm?authuser=0" alt="Dojazd do kontenerów magazynowych">
+            </div>
+        </section>
+
+        <!-- Lightbox - dynamiczne okno do powiększania zdjęć -->
+        <div id="lightbox" class="lightbox">
+            <span class="lightbox-close">&times;</span>
+            <span class="lightbox-nav prev">&#10094;</span>
+            <div class="lightbox-content">
+                <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            </div>
+            <span class="lightbox-nav next">&#10095;</span>
+        </div>
+
+        <!-- Location & Contact Section -->
+        <section id="lokalizacja" class="py-20">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Znajdź nas</h2>
+                    <p class="text-gray-600 mt-4">Zapraszamy do odwiedzenia nas na ul. Krakowskiej we Wrocławiu. Poniżej znajdziesz interaktywną mapę dojazdu.</p>
+                    <div class="mt-6 h-80 rounded-lg overflow-hidden">
+                        <div id="map"></div>
+                    </div>
+                </div>
+                <div id="kontakt" class="bg-white p-8 rounded-lg shadow-2xl">
+                    <h3 class="text-2xl font-bold text-gray-900">Skontaktuj się z nami</h3>
+                    <p class="text-gray-600 mt-2">Wypełnij formularz lub zadzwoń. Odpowiemy na wszystkie pytania.</p>
+                    <!-- Zaktualizowany formularz -->
+                    <form id="contact-form" class="mt-6" action="https://formspree.io/f/mvgqlaep" method="POST">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Imię i nazwisko</label>
+                            <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="mt-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" id="email" name="_replyto" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-1">
+                                <label for="message" class="block text-sm font-medium text-gray-700">Wiadomość</label>
+                                <button type="button" id="generate-message-btn" class="flex items-center text-xs text-blue-600 font-semibold hover:text-blue-700 transition duration-300">
+                                    ✨ Zredaguj wiadomość
+                                </button>
+                            </div>
+                            <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            <p id="loading-indicator" class="text-sm text-gray-500 mt-2 hidden">Generowanie...</p>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                                Wyślij wiadomość
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-6 text-center text-gray-600">
+                        <p>lub zadzwoń: <a href="tel:+48515090555" class="text-blue-600 font-bold">+515 090 555</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 KonteneryWrocław. Wszelkie prawa zastrzeżone.</p>
+            <p class="text-sm text-gray-400 mt-2">Projekt i wykonanie strony: Twoja Firma</p>
+        </div>
+    </footer>
+    <!-- Pamiętaj, aby zastąpić "YOUR_API_KEY" swoim kluczem API. Ten klucz musi mieć skonfigurowane ograniczenia, aby działał na Twojej stronie. -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVoqcjA5J2Met7c85pEgm8NIficVJgQMQ&callback=initMap"></script>
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const generateMessageBtn = document.getElementById('generate-message-btn');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const messageTextarea = document.getElementById('message');
+        const nameInput = document.getElementById('name');
+        const emailInput = document='email';
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        function initMap() {
+            // Zaktualizowane współrzędne na podstawie najnowszych informacji od użytkownika
+            const krakowska = { lat: 51.091736, lng: 17.060025 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 18,
+                center: krakowska,
+            });
+            const marker = new google.maps.Marker({
+                position: krakowska,
+                map: map,
+                title: "Kontenery Wrocław",
+            });
+        }
+        
+        // Obsługa generowania wiadomości przez Gemini API
+        generateMessageBtn.addEventListener('click', async () => {
+            const userName = nameInput.value || 'szanowny Państwa';
+            const userEmail = emailInput.value || 'brak podanego adresu';
+
+            const prompt = `Zredaguj uprzejmą i zwięzłą wiadomość e-mail z zapytaniem o wynajem kontenera magazynowego. Wiadomość ma być skierowana do firmy "Kontenery Wrocław". Użyj danych, jeśli są dostępne:
+                Imię i nazwisko nadawcy: ${userName}
+                Adres e-mail nadawcy: ${userEmail}
+                Temat wiadomości powinien dotyczyć wynajmu kontenera o powierzchni 13,9 m² przy ul. Krakowskiej we Wrocławiu.
+                Wiadomość ma być napisana w języku polskim, w formalnym tonie. Zapytaj o dostępność kontenera i warunki najmu.
+                Nie dodawaj żadnych dodatkowych uwag ani instrukcji. Tylko treść wiadomości.`;
+
+            loadingIndicator.classList.remove('hidden');
+            generateMessageBtn.disabled = true;
+
+            try {
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }]
+                };
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                let response;
+                let result;
+                let success = false;
+                let retries = 0;
+                const maxRetries = 5;
+                const baseDelay = 1000;
+
+                while (retries < maxRetries && !success) {
+                    try {
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (response.status === 429) {
+                            const delay = baseDelay * Math.pow(2, retries);
+                            console.warn(`Too many requests. Retrying in ${delay}ms...`);
+                            await new Promise(res => setTimeout(res, delay));
+                            retries++;
+                        } else {
+                            result = await response.json();
+                            success = true;
+                        }
+                    } catch (e) {
+                        const delay = baseDelay * Math.pow(2, retries);
+                        console.error(`API call failed: ${e}. Retrying in ${delay}ms...`);
+                        await new Promise(res => setTimeout(res, delay));
+                        retries++;
+                    }
+                }
+
+                if (success && result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    messageTextarea.value = result.candidates[0].content.parts[0].text.trim();
+                } else {
+                    messageTextarea.value = 'Wystąpił błąd podczas generowania wiadomości. Proszę spróbować ponownie.';
+                }
+            } catch (error) {
+                console.error('Błąd podczas pobierania danych z API:', error);
+                messageTextarea.value = 'Wystąpił błąd podczas generowania wiadomości. Proszę spróbować ponownie.';
+                
+            } finally {
+                loadingIndicator.classList.add('hidden');
+                generateMessageBtn.disabled = false;
+            }
+        });
+
+        // Obsługa Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const images = document.querySelectorAll('#galeria img');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const prevBtn = document.querySelector('.lightbox-nav.prev');
+        const nextBtn = document.querySelector('.lightbox-nav.next');
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            lightboxImage.src = images[currentIndex].src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            lightboxImage.src = images[currentIndex].src;
+        }
+
+        function showPrevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            lightboxImage.src = images[currentIndex].src;
+        }
+
+        images.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                openLightbox(index);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', showPrevImage);
+        nextBtn.addEventListener('click', showNextImage);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox' || e.target.id === 'lightbox-content') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
